@@ -20,6 +20,7 @@ namespace WebPatentes
         public Startup(IConfiguration configuration)
         { 
             Configuration = configuration;
+            //hols
         }
 
         public IConfiguration Configuration { get; }
