@@ -20,7 +20,6 @@ namespace WebPatentes
         public Startup(IConfiguration configuration)
         { 
             Configuration = configuration;
-            //hols
         }
 
         public IConfiguration Configuration { get; }
@@ -38,7 +37,11 @@ namespace WebPatentes
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<IdentityUser,IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
