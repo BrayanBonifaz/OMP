@@ -45,11 +45,24 @@ namespace WebPatentes
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.ConfigureApplicationCookie(options =>{
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.LoginPath = "/Home/Index";
+            });
+
+            services.AddSession(options =>{
+                options.Cookie.Name = ".SystemPatentes.Session";
+                options.IdleTimeout = TimeSpan.FromHours(12);
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSession();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -60,7 +73,9 @@ namespace WebPatentes
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseStatusCodePagesWithReExecute("/Error/Error", "?statusCode={0}");
+            //app.UseStatusCodePages()
+            //app.UseStatusCodePagesWithRedirects("/Error");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -72,6 +87,7 @@ namespace WebPatentes
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapAreaRoute("Principal","Principal", "{controller=Principal}/{action=Index}/{id?}");
             });
         }
     }

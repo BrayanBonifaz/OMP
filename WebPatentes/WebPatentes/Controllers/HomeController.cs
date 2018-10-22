@@ -7,18 +7,27 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using WebPatentes.Areas.Principal.Controllers;
+using WebPatentes.Library;
 using WebPatentes.Models;
 
 namespace WebPatentes.Controllers
 {
     public class HomeController : Controller
     {
-        IServiceProvider servicesProvider;
-        public HomeController(IServiceProvider servicesProvider)
+        //IServiceProvider servicesProvider;
+        //public HomeController(IServiceProvider servicesProvider)
+        //{
+        //    this.servicesProvider = servicesProvider;
+        //}
+        private Usuarios _usuarios;
+
+        public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
-            this.servicesProvider = servicesProvider;
+            _usuarios = new Usuarios(userManager, signInManager, roleManager);
         }
-        
+
         public IActionResult Index()
         {
             //await CreateRoles(servicesProvider);
@@ -27,13 +36,23 @@ namespace WebPatentes.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Index(LoginViewModels models)
+        public async Task<IActionResult> Index(LoginViewModels model)
         {
 
             if (ModelState.IsValid)
             {
-
-
+                List<object[]> listObject = await _usuarios.UserLogin(model.Input.Email, model.Input.Password);
+                object[] objects = listObject[0];
+                var _identityError = (IdentityError)objects[0];
+                model.ErrorMessage = _identityError.Description;
+                if (model.ErrorMessage.Equals("True"))
+                {
+                    var data = JsonConvert.SerializeObject(objects[1]);
+                    return RedirectToAction(nameof(PrincipalController.Index), "Principal");
+                }
+                else
+                {
+                }
             }
 
             return View();

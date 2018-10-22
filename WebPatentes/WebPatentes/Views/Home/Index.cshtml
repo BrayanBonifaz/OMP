@@ -1,43 +1,75 @@
 ﻿@{
     ViewData["Title"] = "Login";
+
 }
 @model LoginViewModels
 
-<center>
-    <div class="container">
-        <div class="ro">
-            <div class="col s12 m7">
-                <div class="card ">
-                    <div class="card-content">
-                        <center>
-                            <h4 class="">iniciar sesi&oacute;n</h4>
-                        </center>
-                        <section>
-                            <form asp-controller="Home" asp-action="Index" method="post">
-                                <div asp-validation-summary="All" class="text-danger"></div>
-                                <div class="input-field col s12">
-                                    <label asp-for="Input.Email"></label>
-                                    <input asp-for="Input.Email" class="form-control" />
-                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                                </div>
-                                <div class="input-field col s12">
-                                    <label asp-for="Input.Password"></label>
-                                    <input asp-for="Input.Password" class="form-control" />
-                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" id ="btnLogn"class="btn btn-default">Iniciar sesi&oacute;n</button>
-                                </div>
-                            </form>
-                        </section>
-                        <br/>
-                        <label id="indexMessage" class="has-error">@Html.DisplayFor(m => m.ErrorMessage)</label>
+    <div class="LoginForm">
+        <div class="container">
+            <h1 class="form-heading">login Form</h1>
+            <div class="login-form">
+                <div class="main-div">
+                    <div class="panel">
+                        <h2>Admin Login</h2>
+                        <p>Please enter your email and password</p>
+                    </div>
+                    <form id="Login" asp-controller="Home" asp-action="Index" method="post">
+                        <div class="form-group">
+                            <input asp-for="Input.Email" class="form-control" placeholder="Email Address">
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Input.Password" class="form-control" placeholder="Password">
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="btnLogn" class="btn btn-primary">Iniciar sesi&oacute;n</button>
+                        </div>
+                    </form>
+                    <br />
+                    <label id="indexMessage" class="has-error">@Html.DisplayFor(m => m.ErrorMessage)</label>
+                </div>
+                <p class="botto-text"> Brayan Bonifaz | brayan.bonifaz@gmail.com</p>
+            </div>
+        </div>
+    </div>
+@*<center>
+        <div class="container">
+            <div class="ro">
+                <div class="col s12 m7">
+                    <div class="card ">
+                        <div class="card-content">
+                            <center>
+                                <h4 class="">iniciar sesi&oacute;n</h4>
+                            </center>
+                            <section>
+                                <form asp-controller="Home" asp-action="Index" method="post">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.Email"></label>
+                                        <input asp-for="Input.Email" class="form-control" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.Password"></label>
+                                        <input asp-for="Input.Password" class="form-control" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" id ="btnLogn"class="btn btn-default">Iniciar sesi&oacute;n</button>
+                                    </div>
+                                </form>
+                            </section>
+                            <br/>
+                            <label id="indexMessage" class="has-error">@Html.DisplayFor(m => m.ErrorMessage)</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</center>
-@section Scripts{ 
+    </center>*@
+
+
+@section Scripts{
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
