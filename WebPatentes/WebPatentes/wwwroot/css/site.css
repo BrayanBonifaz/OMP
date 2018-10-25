@@ -1,17 +1,17 @@
 ﻿
-/*@media(min-width: 800px) {
+@media(min-width: 800px) {
     .container {
         max-width:50%;
     }
-}*/
+}
 
-/*@media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
 
-}*/
+}
 
 
-.LoginForm {
-    /*background-image: url('../images/blur-26347-27038-hd-wallpapers.jpg');*/
+/*.LoginForm {
+    background-image: url('../images/blur-26347-27038-hd-wallpapers.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -102,4 +102,4 @@
         color: #444444;
         font-size: 13px;
         text-decoration: none;
-    }
+    }*/

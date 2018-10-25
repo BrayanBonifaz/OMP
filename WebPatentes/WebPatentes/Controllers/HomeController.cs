@@ -52,6 +52,7 @@ namespace WebPatentes.Controllers
                 }
                 else
                 {
+                    return View(model);
                 }
             }
 
