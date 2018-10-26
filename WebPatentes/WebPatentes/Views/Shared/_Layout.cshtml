@@ -33,18 +33,64 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <div id="menuNavbar1">
-                    <ul class="right hide-on-med-and-down" >
+                    <ul class="right hide-on-med-and-down">
                         <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="SessionClose">
                             Salir
                         </a>
                     </ul>
+                    <a href="#" data-target="slide-out" class="btn-floating btn-large waves-effect waves-light cyan darken-2 sidenav-trigger"></a>
                 </div>
 
             }
-
         </div>
-
     </nav>
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view cyan darken-2">
+                <img id="foto1" src="~/images/fotos/default.png" class="circle responsive-img valign profile-image" />
+                <p class="white-text" id="name1">@UserManager.GetUserName(User)</p>
+                <p class="white-text" id="role1"></p>
+            </div>
+        </li>
+        <li>
+            <a asp-area="Principal" asp-controller="Principal" asp-action="Index" onclick="">Inicio</a>
+        </li>
+        <li>
+            <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+        </li>
+        <li>
+            <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="SessionClose">Salir</a>
+        </li>
+    </ul>
+    @if (SignInManager.IsSignedIn(User))
+    {
+    <div id="menuNavbar2">
+        <div id="main">
+            <div class="wrapper">
+                <aside id="left-sidebar-nav">
+                    <ul id="slide-out" class="side-nav fixed leftside-navigation" >
+                        <li class="user-details cyan darken-2">
+                            <div class="row">
+                                <div class="col col s5 m4 l6">
+                                    <img src="~/images/fotos/default.png" alt="" id="foto2" class="circle responsive-img valign profile-image">
+                                </div>
+                                <div class="col col s8 m8 l8">
+                                    <p class="white-text" id="name2">@UserManager.GetUserName(User)</p>
+                                    <p class="white-text" id="role2">@ViewData["Roles"]</p>
+                                </div>
+                            </div>
+                        </li>
+                        <div class="collection">
+                            <a asp-area="Principal" asp-controller="Principal" asp-action="Index" onclick="" id="enlace1" class="collection-item">Inicio</a>
+                            <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="Index" onclick="" id="enlace2" class="collection-item">Usuarios</a>
+
+                        </div>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    </div>
+    }
 
     <partial name="_CookieConsentPartial" />
 
@@ -70,11 +116,11 @@
                 integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
         </script>
         @*<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>*@
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>*@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

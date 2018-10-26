@@ -22,16 +22,25 @@ namespace WebPatentes.Controllers
         //    this.servicesProvider = servicesProvider;
         //}
         private Usuarios _usuarios;
+        private SignInManager<IdentityUser> _signInManager;
 
         public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
+            _signInManager = signInManager;
             _usuarios = new Usuarios(userManager, signInManager, roleManager);
         }
 
         public IActionResult Index()
         {
             //await CreateRoles(servicesProvider);
-            return View();
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction(nameof(PrincipalController.Index), "Principal");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
