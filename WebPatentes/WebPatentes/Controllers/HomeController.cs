@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,13 +22,13 @@ namespace WebPatentes.Controllers
         //{
         //    this.servicesProvider = servicesProvider;
         //}
-        private Usuarios _usuarios;
+        private LUsuarios _usuarios;
         private SignInManager<IdentityUser> _signInManager;
 
         public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
-            _usuarios = new Usuarios(userManager, signInManager, roleManager);
+            _usuarios = new LUsuarios(userManager, signInManager, roleManager);
         }
 
         public IActionResult Index()
@@ -57,6 +58,7 @@ namespace WebPatentes.Controllers
                 if (model.ErrorMessage.Equals("True"))
                 {
                     var data = JsonConvert.SerializeObject(objects[1]);
+                    HttpContext.Session.SetString("User", data);
                     return RedirectToAction(nameof(PrincipalController.Index), "Principal");
                 }
                 else
