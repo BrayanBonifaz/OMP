@@ -17,14 +17,14 @@
     }
 }
 
-@media(min-width: 800px) {
+@media(min-width: 998px) {
     .container {
-        max-width:60%;
+        max-width: 60%;
     }
+
     .side-nav {
         max-width: 20%;
-        display:block;
-        
+        display: block;
     }
 }
 
