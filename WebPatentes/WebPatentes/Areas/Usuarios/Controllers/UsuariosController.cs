@@ -30,7 +30,8 @@ namespace WebPatentes.Areas.Usuarios.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                ViewData["Roles"] = _usuarios.userData(HttpContext);
+                //var data = User.Claims.FirstOrDefault(u=> u.Type.Equals("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")).Value;
+                //ViewData["Roles"] = _usuarios.userData(HttpContext);
                 return View();
             }
             else
