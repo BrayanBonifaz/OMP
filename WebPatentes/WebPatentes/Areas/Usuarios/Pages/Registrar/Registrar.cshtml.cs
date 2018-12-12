@@ -20,13 +20,15 @@ namespace WebPatentes.Areas.Usuarios.Pages.Registrar
         //private LUsuarios _usuarios;
         private ListObject objeto = new ListObject();
 
-        public RegistrarModel(RoleManager<IdentityRole> roleManager, IHostingEnvironment environment)
+        public RegistrarModel(RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager, IHostingEnvironment environment)
         {
             objeto._roleManager = roleManager;
+            objeto._userManager = userManager;
             objeto._usuarios = new LUsuarios();
             objeto._usersRole = new UsersRoles();
             objeto._environment = environment;
             objeto._image = new UploadImage();
+            objeto._userRoles = new List<SelectListItem>();
         }
 
 
@@ -45,7 +47,8 @@ namespace WebPatentes.Areas.Usuarios.Pages.Registrar
         {
             [Required]
             public string Role { get; set; }
-
+            [TempData]
+            public string ErrorMessage { get; set; }
             public IFormFile AvatarImage { get; set; }
             public List<SelectListItem> rolesLista { get; set; }
         }
@@ -60,13 +63,62 @@ namespace WebPatentes.Areas.Usuarios.Pages.Registrar
         {
             try
             {
-                var imageName = Input.Email + ".png";
-                await objeto._image.CopiarImageAsync(Input.AvatarImage, imageName, objeto._environment, "Usuarios");
+                objeto._userRoles.Add(new SelectListItem {
+                    Text = Input.Role
+                });
+                var userList = objeto._userManager.Users.Where(u => u.Email.Equals(Input.Email)).ToList();
+                if (userList.Count == 0)
+                {
+                    var imageName = Input.Email + ".png";
+                    var user = new IdentityUser
+                    {
+                        UserName = Input.Email,
+                        Email = Input.Email,
+                        PhoneNumber = Input.Telefono
+                    };
+                    var result = await objeto._userManager.CreateAsync(user, Input.Password);
+
+                    if (result.Succeeded)
+                    {
+                        await objeto._image.CopiarImageAsync(Input.AvatarImage, imageName, objeto._environment, "Usuarios");
+
+                        Input = new InputModel
+                        {
+                            ErrorMessage = string.Concat("El ", Input.Email, " fue registrado correctamente"),
+                            rolesLista = objeto._userRoles
+                        };
+                    }
+                    else
+                    {
+                        foreach (var item in result.Errors)
+                        {
+                            Input = new InputModel
+                            {
+                                ErrorMessage = item.Description,
+                                rolesLista = objeto._userRoles
+                            };
+                        }
+
+                    }
+                }
+                else
+                {
+                    Input = new InputModel
+                    {
+                        ErrorMessage = string.Concat("El ", Input.Email, " ya esta registrado"),
+                        rolesLista = objeto._userRoles
+                    };
+                }
+
+            
             }
             catch (Exception ex)
             {
-
-                throw;
+                Input = new InputModel
+                {
+                    ErrorMessage = ex.Message,
+                    rolesLista = objeto._userRoles
+                };
             }
         }
     }

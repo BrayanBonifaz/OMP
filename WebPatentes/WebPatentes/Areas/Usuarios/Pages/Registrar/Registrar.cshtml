@@ -82,7 +82,9 @@
             </div>
         </div>
         <div class="modal-footer">
-            
+            <label id="Message" class="red-text text-darken-4">
+                @Html.DisplayFor(m=> m.Input.ErrorMessage)
+            </label>
         </div>
     </form>
 </div>
