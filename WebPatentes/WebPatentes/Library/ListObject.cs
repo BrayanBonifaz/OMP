@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,10 @@ namespace WebPatentes.Library
         public UsersRoles _usersRole;
         public UserData _userData;
         public LUsuarios _usuarios;
+        public UploadImage _image;
         public IdentityError _identityError;
         public ApplicationDbContext _context;
+        public IHostingEnvironment _environment;
 
         public List<SelectListItem> _userRoles;
 

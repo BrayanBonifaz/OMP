@@ -22,10 +22,10 @@
                         </div>
                         <div class="card-action">
                             <a>
-                                <div class="file-field">
+                                <div class="file-field input-field">
                                     <div class="btn waves-effect waves-light ">
                                         <span>Subir</span>
-                                        <input accept="image/*" type="file" id="files" name="files" />
+                                        <input asp-for="Input.AvatarImage" accept="image/*" type="file" id="files"/>
                                         <div class="file-path-wrapper">
                                             <input class="file-path" type="text" />
                                         </div>
@@ -71,15 +71,18 @@
                             <label asp-for="Input.Password">Contraseña</label>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                             @Html.DropDownList("Input.Role", new SelectList(Model.Input.rolesLista, "Text", "Text"), "Seleccione un role", null)
+                        </div>
+                        <div class="input-field col s6">
+                            <button type="submit" class="waves-effect waves-light btn">Registrar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="waves-effect waves-light btn">Registrar</button>
+            
         </div>
     </form>
 </div>
